@@ -4,5 +4,6 @@
     <string name="app_name">Global Literacy Launcher</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="background_image_description">background</string>
 
 </resources>

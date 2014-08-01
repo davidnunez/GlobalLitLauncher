@@ -22,4 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:19.+'
+    compile files('libs/json-20140107.jar')
+    compile files('libs/json-simple-1.1.1.jar')
 }

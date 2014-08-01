@@ -5,42 +5,118 @@
     android:background="#0099cc"
     tools:context=".FullscreenActivity">
 
+
+    <GridView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/gridView"
+        android:numColumns="auto_fit"
+        android:background="@drawable/bg"
+        android:gravity="center_vertical|center_horizontal"
+        android:columnWidth="@dimen/icon_cell_size"
+        android:verticalSpacing="50dp"
+        android:horizontalSpacing="50dp"
+        android:longClickable="true"
+        android:padding="30dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settings_pane"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="663dp"
+            android:layout_height="105dp"
+            android:text="manifest"
+            android:id="@+id/manifest"
+            android:singleLine="false"
+            android:layout_gravity="right|center_vertical"
+            android:visibility="gone" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:id="@+id/button4"
+            android:onClick="onClickHideStatus" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:id="@+id/button"
+            android:onClick="onClickSettings" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password Manager"
+            android:id="@+id/button2"
+            android:onClick="onClickPasswordManager" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FunfFileMover"
+            android:id="@+id/button3"
+            android:onClick="onClickFunfFileMover" />
+    </LinearLayout>
+
+    <view
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        class="edu.media.mit.prg.launcher.BiDirectionScrollView"
+        android:id="@+id/scrolling_view"
+        android:background="@drawable/bg"
+        android:visibility="gone">
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout android:id="@+id/fullscreen_content_controls"
+                style="?metaButtonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@color/black_overlay"
+                android:orientation="horizontal"
+                tools:ignore="UselessParent">
+
+            </LinearLayout>
+        </LinearLayout>
+</view>
+
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/secret1"
+        android:gravity="bottom"
+        android:layout_gravity="right|top" />
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/secret2"
+        android:gravity="bottom"
+        android:layout_gravity="left|bottom" />
+    <Button
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/secret3"
+        android:gravity="bottom"
+        android:layout_gravity="right|bottom" />
+
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        android:textColor="#33b5e5"
-        android:textStyle="bold"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:text="@string/dummy_content" />
+
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
-    <FrameLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <Button android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
-
-        </LinearLayout>
-    </FrameLayout>
 
 </FrameLayout>
