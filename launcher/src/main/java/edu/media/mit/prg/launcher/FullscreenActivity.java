@@ -181,29 +181,28 @@ public class FullscreenActivity extends Activity {
                 text.append('\n');
             }
             textView.setText(text);
+
+
+            Object obj = JSONValue.parse(text.toString());
+            JSONObject JSONMain = (JSONObject) obj;
+            JSONArray array = (JSONArray) (JSONMain.get("apps"));
+
+            for (Iterator<JSONObject> iter = array.iterator(); iter.hasNext(); ) {
+                JSONObject element = iter.next();
+                AppModel title = new AppModel();
+                title.title = (String) element.get("title");
+                title.file = (String) element.get("file");
+                title.type = (String) element.get("type");
+                //title.bounce = (Float)element.get("bounce");
+                //title.scale = (Float)element.get("scale");
+
+                iconAdapter.titles.add(title);
+            }
         } catch (IOException e) {
             //You'll need to add proper error handling here
             textView.setText("Couldn't find manifest: " + Environment.getExternalStorageDirectory() + "/launcher/apps.json");
         }
 
-
-        Object obj = JSONValue.parse(text.toString());
-        JSONObject JSONMain = (JSONObject) obj;
-        JSONArray array = (JSONArray) (JSONMain.get("apps"));
-
-        for (Iterator<JSONObject> iter = array.iterator(); iter.hasNext(); ) {
-            JSONObject element = iter.next();
-            AppModel title = new AppModel();
-            title.title = (String) element.get("title");
-            title.file = (String) element.get("file");
-            title.type = (String) element.get("type");
-            //title.bounce = (Float)element.get("bounce");
-            //title.scale = (Float)element.get("scale");
-
-            iconAdapter.titles.add(title);
-        }
-
-        Log.i(TAG, iconAdapter.titles.toString());
     }
 
     @Override
@@ -249,11 +248,11 @@ public class FullscreenActivity extends Activity {
     }
 
 
-
     public void onClickHideStatus(View view) {
         View settingsPane = findViewById(R.id.settings_pane);
         settingsPane.setVisibility(View.INVISIBLE);
     }
+
     public void onClickSettings(View view) {
         Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("com.android.settings");
         startActivity(LaunchIntent);
@@ -302,7 +301,7 @@ public class FullscreenActivity extends Activity {
 //            intent.setDataAndType(myUri, "video/mp4");
 //            startActivity(intent);
             } else if (type.equals("app")) {
-//        	sendLog("LauncherApp", iconAdapter.titles[position][1]);
+            	sendLog("LauncherApp", iconAdapter.titles.get(position).file);
                 Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage(iconAdapter.titles.get(position).file);
                 startActivity(LaunchIntent);
             }
@@ -310,11 +309,13 @@ public class FullscreenActivity extends Activity {
 
         }
     }
+
     private boolean secret1_value = false;
     private boolean secret2_value = false;
     private boolean secret3_value = false;
+
     private void setupSecrets() {
-        final Button secret1 = (Button)findViewById(R.id.secret1);
+        final Button secret1 = (Button) findViewById(R.id.secret1);
         secret1.setVisibility(View.VISIBLE);
         secret1.setBackgroundColor(Color.TRANSPARENT);
         secret1.setOnClickListener(new View.OnClickListener() {
@@ -329,14 +330,12 @@ public class FullscreenActivity extends Activity {
         });
 
 
-        Button secret2 = (Button)findViewById(R.id.secret2);
+        Button secret2 = (Button) findViewById(R.id.secret2);
         secret2.setVisibility(View.VISIBLE);
         secret2.setBackgroundColor(Color.TRANSPARENT);
-        secret2.setOnClickListener(new View.OnClickListener()
-        {
+        secret2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Log.v(TAG, "secret2");
                 if (secret1_value && !secret2_value && !secret3_value) {
                     secret2_value = true;
@@ -351,14 +350,12 @@ public class FullscreenActivity extends Activity {
         });
 
 
-        Button secret3 = (Button)findViewById(R.id.secret3);
+        Button secret3 = (Button) findViewById(R.id.secret3);
         secret3.setVisibility(View.VISIBLE);
         secret3.setBackgroundColor(Color.TRANSPARENT);
-        secret3.setOnClickListener(new View.OnClickListener()
-        {
+        secret3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Log.v(TAG, "secret3");
                 if (secret1_value && secret2_value && !secret3_value) {
                     View settingsPane = findViewById(R.id.settings_pane);
@@ -374,10 +371,6 @@ public class FullscreenActivity extends Activity {
         });
 
 
-
-
-
-
     }
 
     void playSound() {
@@ -389,6 +382,23 @@ public class FullscreenActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public static final String DATABASE_NAME_KEY = "DATABASE_NAME";
+    public static final String NAME_KEY = "NAME";
+    public static final String VALUE_KEY = "VALUE";
+    public static final String TIMESTAMP_KEY = "TIMESTAMP";
+    public static final String ACTION_RECORD = "edu.mit.media.funf.RECORD";
+    public void sendLog(String name, String value) {
+        Intent i = new Intent();
+        i.setAction(ACTION_RECORD);
+        Bundle b = new Bundle();
+        b.putString(DATABASE_NAME_KEY, "mainPipeline");
+        b.putLong(TIMESTAMP_KEY, System.currentTimeMillis()/1000);
+        b.putString(NAME_KEY, name);
+        b.putString(VALUE_KEY, value);
+        i.putExtras(b);
+        sendBroadcast(i);
+        Log.i(TAG, "Funf Record: " + name + " = " + value);
     }
 
 }
