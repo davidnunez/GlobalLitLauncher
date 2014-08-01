@@ -21,19 +21,11 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/settings_pane"
-        android:visibility="invisible">
-
-        <TextView
-            android:layout_width="663dp"
-            android:layout_height="105dp"
-            android:text="manifest"
-            android:id="@+id/manifest"
-            android:singleLine="false"
-            android:layout_gravity="right|center_vertical"
-            android:visibility="gone" />
+        android:visibility="invisible"
+        android:background="@color/black_overlay">
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -63,6 +55,13 @@
             android:text="FunfFileMover"
             android:id="@+id/button3"
             android:onClick="onClickFunfFileMover" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="manifest"
+            android:id="@+id/manifest"
+            android:singleLine="false" />
     </LinearLayout>
 
     <view
