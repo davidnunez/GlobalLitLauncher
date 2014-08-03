@@ -3,7 +3,12 @@ package edu.media.mit.prg.launcher;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -185,6 +190,18 @@ public class FullscreenActivity extends Activity {
 
             Object obj = JSONValue.parse(text.toString());
             JSONObject JSONMain = (JSONObject) obj;
+
+            try {
+                String background = (String) JSONMain.get("background");
+                if (!background.equals("")) {
+                    GridView gridView = (GridView) findViewById(R.id.gridView);
+                    String photoPath = Environment.getExternalStorageDirectory() + "/launcher/" + background;
+                    gridView.setBackground(Drawable.createFromPath(photoPath));
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+
             JSONArray array = (JSONArray) (JSONMain.get("apps"));
 
             for (Iterator<JSONObject> iter = array.iterator(); iter.hasNext(); ) {
