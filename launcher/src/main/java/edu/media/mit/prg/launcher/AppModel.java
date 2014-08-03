@@ -8,7 +8,7 @@ public class AppModel {
     public String title;
     public String file;
     public String type;
-    public Float bounce;
-    public Float scale;
+    public Float bounce = new Float(1.0);
+    public Float scale = new Float(1.0);
 
 }

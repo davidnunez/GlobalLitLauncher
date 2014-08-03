@@ -193,14 +193,17 @@ public class FullscreenActivity extends Activity {
                 title.title = (String) element.get("title");
                 title.file = (String) element.get("file");
                 title.type = (String) element.get("type");
-                //title.bounce = (Float)element.get("bounce");
-                //title.scale = (Float)element.get("scale");
-
+                try {
+                    title.bounce = ((Number) element.get("bounce")).floatValue();
+                    title.scale = ((Number) element.get("scale")).floatValue();
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not get mentoring values for " + title.file);
+                }
                 iconAdapter.titles.add(title);
             }
         } catch (IOException e) {
             //You'll need to add proper error handling here
-            textView.setText("Couldn't find manifest: " + Environment.getExternalStorageDirectory() + "/launcher/apps.json");
+            textView.setText("Couldn't parse manifest: " + Environment.getExternalStorageDirectory() + "/launcher/apps.json");
         }
 
     }
@@ -269,6 +272,14 @@ public class FullscreenActivity extends Activity {
         startActivity(LaunchIntent);
     }
 
+    public void onClickReloadManifest(View view) {
+        final TextView textView = ((TextView) findViewById(R.id.manifest));
+        loadManifest(textView);
+        iconAdapter.notifyDataSetChanged();
+        //this.view.invalidate();
+        finish();
+        startActivity(getIntent());
+    }
 
     public void setupGridView() {
 

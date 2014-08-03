@@ -56,6 +56,13 @@
             android:id="@+id/button3"
             android:onClick="onClickFunfFileMover" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reload Manifest"
+            android:id="@+id/button5"
+            android:onClick="onClickReloadManifest" />
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
